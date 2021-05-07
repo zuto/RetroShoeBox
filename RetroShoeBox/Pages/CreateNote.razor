@@ -1,10 +1,13 @@
-﻿@page "/CreateNote"
+﻿@page "/CreateNote/{noteCreator}"
 
 @using Microsoft.Extensions.Logging
 @using RetroShoeBox.Models
+@using RetroShoeBox.Services
 
 @inject ILogger<CreateNote> Logger
-<h3>CreateNote</h3>
+@inject NavigationManager navigationManager
+
+<h3>Create A Retro Note</h3>
 
 <EditForm Model="@retroNote" OnValidSubmit="@HandleValidSubmit">
     <DataAnnotationsValidator />
@@ -12,26 +15,33 @@
     <p>Go ahead, create a note for the next retro!</p>
     <label>Note</label>
     <br />
-    <input type="text" @bind-value="retroNote.Note" />
-    @*<textarea>@bind-value="retroNote.Note"</textarea>*@
-    <button type="submit">Create</button>
+    <InputTextArea @bind-Value="retroNote.Note" class="form-control" rows="4" />
+    <button type="submit" class="btn btn-primary">Create</button>
 </EditForm>
-<p>
-    @retroNote.Note
-</p>
-<p>
-    @retroNote.Owner
-</p>
 
 @code {
+    [Parameter] public string NoteCreator { get; set; }
 
-    private readonly RetroNote retroNote = new RetroNote
+    private readonly RetroNote retroNote = new RetroNote();
+    private readonly NoteStorageService noteStorageService = NoteStorageService.Instance;
+
+    protected override void OnInitialized()
     {
-        Owner = "Dan Smith"
-    };
+        retroNote.Owner = NoteCreator;
+    }
 
     private void HandleValidSubmit()
     {
         Logger.LogInformation("We can create a note");
+
+        var newNote = new RetroNote
+        {
+            Note = retroNote.Note,
+            Owner = retroNote.Owner
+        };
+
+        noteStorageService.SaveNewNote(newNote);
+
+        navigationManager.NavigateTo($"/allretronotes/{NoteCreator}");
     }
 }

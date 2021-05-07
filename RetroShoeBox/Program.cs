@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using RetroShoeBox.Services;
 
 namespace RetroShoeBox
 {
@@ -18,6 +19,7 @@ namespace RetroShoeBox
             builder.RootComponents.Add<App>("app");
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+            builder.Services.AddSingleton<NoteStorageService, NoteStorageService>();
 
             builder.Services.AddMsalAuthentication(options =>
             {

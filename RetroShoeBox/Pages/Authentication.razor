@@ -1,8 +1,10 @@
 @page "/authentication/{action}"
 
 @using RetroShoeBox.Models
-@using Microsoft.Extensions.Logging
 @using RetroShoeBox.Services
+
+@using Microsoft.Extensions.Logging
+
 
 @inject ILogger<Authentication> Logger
 @inject NavigationManager navigationManager
@@ -14,12 +16,12 @@
     <p>Please enter your details to log in</p>
     <label>Username</label>
     <br />
-    <input type="text" @bind-value="userLogin.UserName" />
+    <InputText @bind-Value="userLogin.UserName" class="form-control" />
     <br />
     <label>Password</label>
     <br />
-    <input type="password" @bind-value="userLogin.Password" />
-    <button type="submit">Login</button>
+    <input type="password" @bind-value="userLogin.Password" class="form-control" />
+    <button type="submit" class="btn btn-primary">Login</button>
 </EditForm>
 
 @code{
@@ -40,7 +42,7 @@
 
         if (userDetails.IsLoggedIn)
         {
-            navigationManager.NavigateTo("/createnote");
+            navigationManager.NavigateTo($"/allretronotes/{userDetails.FirstName} {userDetails.LastName}");
         }
         else
         {

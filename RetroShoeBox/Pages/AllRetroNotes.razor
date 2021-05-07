@@ -1,0 +1,33 @@
+﻿@page "/AllRetroNotes/{noteCreator}"
+@using RetroShoeBox.Services
+@using RetroShoeBox.Models
+
+<h3>All Retro Notes</h3>
+
+<div class="main">
+    <div class="top-row px-4 auth">
+        <a href="createnote/@NoteCreator">Add new note</a>
+    </div>
+
+    <div class="content px-4">
+        @foreach (var note in _allNotes)
+        {
+            <p>@note.Owner : @note.Note</p>
+        }
+    </div>
+</div>
+
+
+
+@code {
+    [Parameter] public string NoteCreator { get; set; }
+
+    private List<RetroNote> _allNotes;
+
+    protected override void OnInitialized()
+    {
+         _allNotes = NoteStorageService.Instance.GetAllNotes();
+    }
+
+
+}
