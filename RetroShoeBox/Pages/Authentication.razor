@@ -1,37 +1,55 @@
 @page "/authentication/{action}"
-@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
 @using RetroShoeBox.Models
+@using Microsoft.Extensions.Logging
+@using RetroShoeBox.Services
+
+@inject ILogger<Authentication> Logger
+@inject NavigationManager navigationManager
 
 @*<RemoteAuthenticatorView Action="@Action" />*@
 
-<EditForm Model="@userLogin">
+<EditForm Model="@userLogin" OnValidSubmit="@HandleValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <p>Please enter your details to log in</p>
     <label>Username</label>
     <br />
-    <input type="text" @bind-value="userLogin.UserName" /> 
-    <br/>
+    <input type="text" @bind-value="userLogin.UserName" />
+    <br />
     <label>Password</label>
     <br />
-    <input type="text" @bind-value="userLogin.Password" />
+    <input type="password" @bind-value="userLogin.Password" />
     <button type="submit">Login</button>
 </EditForm>
 
 @code{
     [Parameter] public string Action { get; set; }
 
-    private UserLogin userLogin = new UserLogin();
+    private readonly UserLogin userLogin = new UserLogin();
+    private readonly AuthenticationService authenticationService = new AuthenticationService();
 
     public string Username { get; set; }
 
     public string Password { get; set; }
 
-    private void LoginButtonClick()
+    private void HandleValidSubmit()
     {
-        Console.Write("Button clicked");
-    }
+        Logger.LogInformation("HandleValidSubmit called");
 
-    public object LoginModel { get; set; }
+        var isLoggedIn = authenticationService.IsAuthenticated(userLogin.UserName, userLogin.Password);
+
+        if (isLoggedIn)
+        {
+            navigationManager.NavigateTo("/fetchdata");
+        }
+        else
+        {
+            navigationManager.NavigateTo("/");
+        }
+
+
+
+    }
 
 }
