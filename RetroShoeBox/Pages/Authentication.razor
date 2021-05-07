@@ -7,7 +7,6 @@
 @inject ILogger<Authentication> Logger
 @inject NavigationManager navigationManager
 
-@*<RemoteAuthenticatorView Action="@Action" />*@
 
 <EditForm Model="@userLogin" OnValidSubmit="@HandleValidSubmit">
     <DataAnnotationsValidator />
@@ -37,19 +36,16 @@
     {
         Logger.LogInformation("HandleValidSubmit called");
 
-        var isLoggedIn = authenticationService.IsAuthenticated(userLogin.UserName, userLogin.Password);
+        var userDetails = authenticationService.IsAuthenticated(userLogin.UserName, userLogin.Password);
 
-        if (isLoggedIn)
+        if (userDetails.IsLoggedIn)
         {
-            navigationManager.NavigateTo("/fetchdata");
+            navigationManager.NavigateTo("/createnote");
         }
         else
         {
             navigationManager.NavigateTo("/");
         }
-
-
-
     }
 
 }

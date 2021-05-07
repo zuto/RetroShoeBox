@@ -1,0 +1,37 @@
+﻿@page "/CreateNote"
+
+@using Microsoft.Extensions.Logging
+@using RetroShoeBox.Models
+
+@inject ILogger<CreateNote> Logger
+<h3>CreateNote</h3>
+
+<EditForm Model="@retroNote" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <p>Go ahead, create a note for the next retro!</p>
+    <label>Note</label>
+    <br />
+    <input type="text" @bind-value="retroNote.Note" />
+    @*<textarea>@bind-value="retroNote.Note"</textarea>*@
+    <button type="submit">Create</button>
+</EditForm>
+<p>
+    @retroNote.Note
+</p>
+<p>
+    @retroNote.Owner
+</p>
+
+@code {
+
+    private readonly RetroNote retroNote = new RetroNote
+    {
+        Owner = "Dan Smith"
+    };
+
+    private void HandleValidSubmit()
+    {
+        Logger.LogInformation("We can create a note");
+    }
+}

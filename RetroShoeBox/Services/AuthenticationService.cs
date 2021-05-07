@@ -1,20 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using RetroShoeBox.Models;
 
 namespace RetroShoeBox.Services
 {
     public class AuthenticationService
     {
-        public bool IsAuthenticated(string username, string password)
+        public UserDetails IsAuthenticated(string username, string password)
         {
             if (username == "Jade")
             {
-                return true;
+                return new UserDetails
+                {
+                    FirstName = "Jade",
+                    LastName = "Kneen",
+                    IsLoggedIn = true
+                };
             }
 
-            return false;
+            if (username == "Dan")
+            {
+                return new UserDetails
+                {
+                    FirstName = "Dan",
+                    LastName = "Smith",
+                    IsLoggedIn = true
+                };
+            }
+
+            return new UserDetails();
         }
     }
 }
