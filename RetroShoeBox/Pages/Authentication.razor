@@ -1,0 +1,37 @@
+@page "/authentication/{action}"
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using RetroShoeBox.Models
+
+@*<RemoteAuthenticatorView Action="@Action" />*@
+
+<EditForm Model="@userLogin">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <p>Please enter your details to log in</p>
+    <label>Username</label>
+    <br />
+    <input type="text" @bind-value="userLogin.UserName" /> 
+    <br/>
+    <label>Password</label>
+    <br />
+    <input type="text" @bind-value="userLogin.Password" />
+    <button type="submit">Login</button>
+</EditForm>
+
+@code{
+    [Parameter] public string Action { get; set; }
+
+    private UserLogin userLogin = new UserLogin();
+
+    public string Username { get; set; }
+
+    public string Password { get; set; }
+
+    private void LoginButtonClick()
+    {
+        Console.Write("Button clicked");
+    }
+
+    public object LoginModel { get; set; }
+
+}
