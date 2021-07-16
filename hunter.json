@@ -1,0 +1,25 @@
+{
+    "service": {
+      "name": "Retro ShoeBox",
+      "owner": "Everyone"
+    },
+    "docs": [
+      ""
+    ],
+    "ci": [
+      ""
+    ],
+    "monitoring": {
+      "logs": [
+        ""
+      ],
+      "dashboards": [
+        "N/A"
+      ]
+    },
+    "tags": [
+      "Blazor",
+      "WASM",
+      "Retro-Shoebox"
+    ]
+  }
