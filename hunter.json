@@ -4,22 +4,23 @@
       "owner": "Everyone"
     },
     "docs": [
-      ""
+
     ],
     "ci": [
-      ""
+
     ],
     "monitoring": {
       "logs": [
-        ""
+
       ],
       "dashboards": [
-        "N/A"
+
       ]
     },
     "tags": [
       "Blazor",
       "WASM",
+      "10-percent",
       "Retro-Shoebox"
     ]
   }
